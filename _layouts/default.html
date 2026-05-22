@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }}</title>
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
+<body>
+
+  <!-- 侧边栏 TOC（文章内目录） -->
+  <aside id="sidebar-toc" class="sidebar-toc">
+    <div class="sidebar-header">
+      <button id="sidebar-toggle-btn" class="hamburger" aria-label="菜单">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <span class="sidebar-title">目录</span>
+    </div>
+    <nav class="toc-list" id="toc-list">
+      <!-- JS 动态生成的文章标题 -->
+    </nav>
+  </aside>
+
+  <!-- 侧边栏的遮罩（手机端点击外部关闭） -->
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+  <!-- 全局目录层（Ctrl+I 滑出） -->
+  <div id="global-toc-overlay" class="global-toc-overlay">
+    <div class="global-toc-content">
+      <h2>📚 全部笔记</h2>
+      <ul>
+        {% for post in site.posts %}
+          <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+        {% endfor %}
+      </ul>
+      <button id="close-global-toc" class="close-btn">✕ 关闭</button>
+    </div>
+  </div>
+
+  <!-- 主内容区 -->
+  <main class="main-content">
+    {{ content }}
+  </main>
+
+  <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+</body>
+</html>
