@@ -1,28 +1,139 @@
-/* 基础重置 */
-body {
-  margin: 0;
-  font-family: system-ui, -apple-system, sans-serif;
-  line-height: 1.6;
+/* ========== 基础设置 ========== */
+:root {
+  --bg: #faf9f7;
+  --card-bg: #ffffff;
+  --text: #2c3e50;
+  --text-light: #5a6c7d;
+  --accent: #4a90d9;
+  --accent-hover: #357abd;
+  --border: #e9ecef;
+  --shadow: 0 4px 20px rgba(0,0,0,0.04);
+  --radius: 12px;
+  --sidebar-width: 280px;
+  --glass-bg: rgba(255,255,255,0.85);
+  --glass-blur: blur(20px);
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+  --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* 深色模式变量 */
+[data-theme="dark"] {
+  --bg: #1a1d23;
+  --card-bg: #252830;
+  --text: #d1d5db;
+  --text-light: #9ca3af;
+  --accent: #5b9bd5;
+  --accent-hover: #7fb8e6;
+  --border: #383d48;
+  --shadow: 0 4px 20px rgba(0,0,0,0.2);
+  --glass-bg: rgba(37,40,48,0.85);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  transition: background var(--transition), color var(--transition);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+a:hover {
+  color: var(--accent-hover);
+}
+
+code {
+  font-family: var(--font-mono);
+  background: var(--border);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* ========== 主内容区 ========== */
 .main-content {
   max-width: 800px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-  transition: margin-left 0.3s ease;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 5rem;
+  transition: margin-left var(--transition);
 }
 
-/* ========== 左侧 TOC 侧边栏 ========== */
+.sidebar-active .main-content {
+  margin-left: var(--sidebar-width);
+}
+
+/* 首页文章卡片 */
+.post-list {
+  list-style: none;
+  display: grid;
+  gap: 1.5rem;
+}
+.post-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.post-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+}
+.post-card h3 {
+  margin-bottom: 0.5rem;
+}
+.post-card time {
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+/* 文章内页样式 */
+.post-article h1 {
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+}
+.post-article h2 {
+  font-size: 1.6rem;
+  margin: 2rem 0 0.8rem;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 0.3rem;
+  display: inline-block;
+}
+.post-article h3 {
+  font-size: 1.3rem;
+  margin: 1.5rem 0 0.5rem;
+  color: var(--text-light);
+}
+.post-article p {
+  margin-bottom: 1rem;
+}
+
+/* ========== 左侧侧边栏 (TOC) ========== */
 .sidebar-toc {
   position: fixed;
   top: 0;
   left: 0;
-  width: 280px;
+  width: var(--sidebar-width);
   height: 100vh;
-  background: #fff;
-  box-shadow: 2px 0 12px rgba(0,0,0,0.1);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-right: 1px solid var(--border);
+  box-shadow: 4px 0 15px rgba(0,0,0,0.05);
   transform: translateX(-100%);
-  transition: transform 0.3s ease;
+  transition: transform var(--transition);
   z-index: 999;
   overflow-y: auto;
   display: flex;
@@ -36,39 +147,46 @@ body {
 .sidebar-header {
   display: flex;
   align-items: center;
-  padding: 1rem;
-  border-bottom: 1px solid #eee;
+  padding: 1.2rem;
+  border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
-  background: #fff;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   z-index: 2;
 }
 
 .sidebar-title {
   margin-left: 0.75rem;
   font-weight: 600;
+  font-size: 1rem;
 }
 
-/* 三条杠汉堡按钮 */
+/* 三条杠按钮 */
 .hamburger {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 6px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  width: 28px;
-  height: 28px;
+  gap: 5px;
+  width: 30px;
+  height: 30px;
   justify-content: center;
   align-items: center;
+  border-radius: 6px;
+  transition: background 0.2s;
 }
-
+.hamburger:hover {
+  background: var(--border);
+}
 .hamburger span {
   display: block;
-  width: 22px;
+  width: 20px;
   height: 2px;
-  background: #333;
+  background: var(--text);
   border-radius: 2px;
   transition: all 0.3s;
 }
@@ -77,103 +195,134 @@ body {
 .sidebar-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.3);
+  background: rgba(0,0,0,0.2);
+  backdrop-filter: blur(2px);
   z-index: 998;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s;
+  transition: opacity var(--transition);
 }
-
 .sidebar-overlay.active {
   opacity: 1;
   pointer-events: auto;
 }
 
-/* 侧边栏展开时，主内容往右推一点点（可选） */
-.sidebar-active .main-content {
-  margin-left: 300px;
-}
-
-/* TOC 列表样式 */
+/* TOC 列表 */
 .toc-list {
   list-style: none;
   padding: 1rem;
   margin: 0;
 }
-
 .toc-list a {
   display: block;
-  padding: 0.4rem 0.5rem;
-  color: #555;
-  text-decoration: none;
-  border-radius: 4px;
-  font-size: 0.95rem;
+  padding: 0.5rem 0.75rem;
+  color: var(--text-light);
+  font-size: 0.9rem;
+  border-radius: 6px;
+  transition: all 0.2s;
 }
-
 .toc-list a:hover,
 .toc-list a.active {
-  background: #f0f0f0;
-  color: #000;
+  background: var(--accent);
+  color: #fff;
 }
 
-/* ========== 全局目录层（从上滑下） ========== */
+/* ========== 全局目录层（Ctrl+I） ========== */
 .global-toc-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.85);
-  color: #fff;
+  background: rgba(20, 22, 27, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #f0f0f0;
   transform: translateY(-100%);
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   z-index: 1001;
   overflow-y: auto;
 }
-
 .global-toc-overlay.active {
   transform: translateY(0);
 }
-
 .global-toc-content {
   max-width: 600px;
-  margin: 5vh auto;
+  margin: 8vh auto;
   padding: 2rem;
 }
-
 .global-toc-content h2 {
   margin-bottom: 2rem;
-  font-size: 1.8rem;
+  font-size: 2rem;
+  color: #fff;
+  border-bottom: 2px solid rgba(255,255,255,0.3);
+  padding-bottom: 0.5rem;
 }
-
 .global-toc-content ul {
   list-style: none;
   padding: 0;
 }
-
 .global-toc-content li {
-  margin: 1rem 0;
+  margin: 0.8rem 0;
 }
-
 .global-toc-content a {
-  color: #8ab4f8;
-  font-size: 1.2rem;
-  text-decoration: none;
-  transition: color 0.2s;
+  color: #a8c7fa;
+  font-size: 1.3rem;
+  transition: all 0.2s;
 }
-
 .global-toc-content a:hover {
   color: #fff;
-  text-decoration: underline;
+  padding-left: 0.5rem;
 }
-
 .close-btn {
   margin-top: 2rem;
-  background: #fff;
-  color: #000;
-  border: none;
-  padding: 0.6rem 1.5rem;
-  border-radius: 6px;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 0.7rem 1.8rem;
+  border-radius: 30px;
   font-weight: 600;
   cursor: pointer;
+  backdrop-filter: blur(5px);
+  transition: all 0.2s;
+}
+.close-btn:hover {
+  background: rgba(255,255,255,0.25);
+  border-color: #fff;
+}
+
+/* ========== 深色模式切换按钮 ========== */
+.theme-toggle {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  z-index: 1000;
+  transition: all 0.2s;
+}
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+/* ========== 响应式 ========== */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 2rem 1rem;
+  }
+  .sidebar-active .main-content {
+    margin-left: 0;
+  }
+  .sidebar-toc {
+    width: 100%;
+  }
 }
